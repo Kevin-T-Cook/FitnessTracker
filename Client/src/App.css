@@ -1,0 +1,15 @@
+@keyframes riseUp {
+    from {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .logo-container {
+    animation: riseUp 2s ease-out forwards;
+  }
+  

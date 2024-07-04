@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ExerciseForm from './ExerciseForm';
+import ExerciseSet from './ExerciseSet';
 
-function NewWorkout() {
-  const today = new Date().toLocaleDateString();
+function NewWorkout({ workoutName, onAddExercise }) {
+  const [showExerciseForm, setShowExerciseForm] = useState(false);
+  const [exercises, setExercises] = useState([]); // Local state for exercises
+
+  const handleAddExerciseForm = () => {
+    setShowExerciseForm(!showExerciseForm);
+  };
+
+  const handleSaveExercise = (newExercise) => {
+    onAddExercise(newExercise); // Pass new exercise to Home component
+    setExercises([...exercises, newExercise]); // Update local state
+  };
 
   return (
     <div className="new-workout">
-      <label htmlFor="workoutName">Workout Name:</label>
-      <input type="text" id="workoutName" name='workoutName' placeholder='Monday Pull'/>
-      <h2>Date: {today}</h2>
-      <form>
-        <label htmlFor="exercise">Exercise:</label>
-        <input type="text" id="exercise" name="exercise" placeholder='Bench Press' />
-        <br />
-        <label htmlFor="sets">Sets:</label>
-        <input type="number" id="sets" name="sets" placeholder='3'/>
-        <br />
-        <label htmlFor="reps">Reps:</label>
-        <input type="number" id="reps" name="reps" placeholder='10'/>
-        <br />
-        <button type="submit">Save Exercise</button>
-      </form>
+      <h2>Workout Name: {workoutName}</h2>
+      <button onClick={handleAddExerciseForm}>
+        {showExerciseForm ? 'Close Exercise Form' : 'Add Exercise'}
+      </button>
+      {showExerciseForm && <ExerciseForm onAddExercise={handleSaveExercise} />}
+      {exercises.length > 0 && (
+        <div>
+          <h2>Exercises</h2>
+          {exercises.map((exercise) => (
+            <ExerciseSet key={exercise.id} {...exercise} /> // Pass exercise data as props
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-export default NewWorkout
+export default NewWorkout;
