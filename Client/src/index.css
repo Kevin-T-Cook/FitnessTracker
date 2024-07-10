@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Abel Font';
+    src: url('/src/assets/fonts/Abel.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
